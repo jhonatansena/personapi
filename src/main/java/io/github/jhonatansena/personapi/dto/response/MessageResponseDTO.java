@@ -1,4 +1,4 @@
-package io.github.jhonatansena.personapi.dto;
+package io.github.jhonatansena.personapi.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
