@@ -1,5 +1,6 @@
 package io.github.jhonatansena.personapi.controller;
 
+import io.github.jhonatansena.personapi.exception.PersonNotFoundException;
 import io.github.jhonatansena.personapi.service.PersonService;
 import io.github.jhonatansena.personapi.dto.request.PersonDTO;
 import io.github.jhonatansena.personapi.dto.response.MessageResponseDTO;
@@ -32,11 +33,15 @@ public class PersonController {
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.FOUND)
     public List<PersonDTO> listAllPeople(){
 
        return  personService.listAllPeople();
 
+    }
+
+    @GetMapping("/{id}")
+    public PersonDTO getById(@PathVariable Long id) throws PersonNotFoundException {
+        return personService.listById(id);
     }
 
 

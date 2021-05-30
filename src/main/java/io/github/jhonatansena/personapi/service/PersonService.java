@@ -6,8 +6,10 @@ import io.github.jhonatansena.personapi.dto.response.MessageResponseDTO;
 import io.github.jhonatansena.personapi.entity.Person;
 import io.github.jhonatansena.personapi.repository.PersonRepository;
 import io.github.jhonatansena.personapi.mapper.PersonMapper;
+import io.github.jhonatansena.personapi.exception.PersonNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,18 @@ public class PersonService {
         return  allPeople.stream()
                 .map(personMapper::toDTO)
                 .collect(Collectors.toList());
+
+    }
+
+
+    public PersonDTO listById(Long id) throws PersonNotFoundException{
+        Optional<Person> optionalPerson = personRepository.findById(id);
+
+        if(optionalPerson.isEmpty()){
+            throw new PersonNotFoundException(id);
+        }
+
+        return personMapper.toDTO(optionalPerson.get());
 
     }
 
