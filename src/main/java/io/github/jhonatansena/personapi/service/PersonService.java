@@ -11,22 +11,20 @@ import io.github.jhonatansena.personapi.exception.PersonNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
     private PersonRepository personRepository;
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
-    @Autowired
-    PersonService(PersonRepository personRepository){
-        this.personRepository = personRepository;
-    }
 
     @PostMapping
     public MessageResponseDTO createPerson(  PersonDTO personDTO){
