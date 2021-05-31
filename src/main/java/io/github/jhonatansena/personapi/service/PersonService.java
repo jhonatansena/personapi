@@ -9,7 +9,6 @@ import io.github.jhonatansena.personapi.mapper.PersonMapper;
 import io.github.jhonatansena.personapi.exception.PersonNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,12 +50,21 @@ public class PersonService {
 
 
     public PersonDTO listById(Long id) throws PersonNotFoundException{
-      Person person =  personRepository.findById(id)
-                .orElseThrow(() ->
-                        new PersonNotFoundException(id));
+      Person person = verifyIfAlredyExists(id);
 
         return personMapper.toDTO(person);
 
+    }
+
+    public void delete(Long id)throws PersonNotFoundException{
+        verifyIfAlredyExists(id);
+        personRepository.deleteById(id);
+    }
+
+    private Person verifyIfAlredyExists(Long id)throws PersonNotFoundException{
+
+        return personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
     }
 
 
